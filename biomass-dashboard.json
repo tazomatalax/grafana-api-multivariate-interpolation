@@ -1,0 +1,594 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Interactive dashboard for biomass optimization. Enter any numerical values in the input fields above. The backend will process your inputs through the interpolation model and display results immediately.",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 10,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "default": false,
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "biomass_calc_api"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "base": "absolute",
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^calculated_output$/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {},
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.2.2+security-01",
+      "targets": [
+        {
+          "body": "",
+          "columns": [
+            {
+              "selector": "fuel_price",
+              "text": "fuel_price",
+              "type": "number"
+            },
+            {
+              "selector": "commodity_cost",
+              "text": "commodity_cost",
+              "type": "number"
+            },
+            {
+              "selector": "energy_price",
+              "text": "energy_price",
+              "type": "number"
+            },
+            {
+              "selector": "weather_index",
+              "text": "weather_index",
+              "type": "number"
+            },
+            {
+              "selector": "calculated_output",
+              "text": "calculated_output",
+              "type": "number"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "biomass_calc_api"
+          },
+          "filters": [],
+          "format": "table",
+          "global_query_id": "",
+          "intervalFactor": 1,
+          "method": "GET",
+          "name": "Query0",
+          "parser": "backend",
+          "refId": "A",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "http://127.0.0.1:8000/calculate?fuel_price=${fuel_price}&commodity_cost=${commodity_cost}&energy_price=${energy_price}&weather_index=${weather_index}",
+          "urlOptions": {
+            "key": "value"
+          },
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        }
+      ],
+      "title": "Calculated Output (Latest)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "biomass_calc_api"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "base": "absolute",
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "fuel_price"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "commodity_cost"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "energy_price"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "calculated_output"
+            },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "base": "absolute",
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "light-blue",
+                      "value": null
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 18,
+        "x": 6,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": "all",
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "timestamp"
+          }
+        ]
+      },
+      "pluginVersion": "11.2.2+security-01",
+      "targets": [
+        {
+          "body": "",
+          "format": "table",
+          "intervalFactor": 1,
+          "method": "GET",
+          "name": "Query0",
+          "parser": "backend",
+          "refId": "A",
+          "source": "url",
+          "type": "json",
+          "url": "http://127.0.0.1:8000/results/history",
+          "urlOptions": {
+            "key": "value"
+          },
+          "columns": [
+            {"selector": "timestamp", "text": "Timestamp", "type": "string"},
+            {"selector": "fuel_price", "text": "Fuel Price", "type": "number"},
+            {"selector": "commodity_cost", "text": "Commodity Cost", "type": "number"},
+            {"selector": "energy_price", "text": "Energy Price", "type": "number"},
+            {"selector": "weather_index", "text": "Weather Index", "type": "number"},
+            {"selector": "calculated_output", "text": "Calculated Output", "type": "number"}
+          ]
+        }
+      ],
+      "title": "Historical Calculation Results",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "default": false,
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "biomass_calc_api"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "base": "absolute",
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "fuel_price"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "commodity_cost"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "energy_price"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "calculated_output"
+            },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "base": "absolute",
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "light-blue",
+                      "value": null
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "id": 3,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": "all",
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "11.2.2+security-01",
+      "targets": [
+        {
+          "body": "",
+          "columns": [
+            {
+              "selector": "fuel_price",
+              "text": "fuel_price",
+              "type": "number"
+            },
+            {
+              "selector": "commodity_cost",
+              "text": "commodity_cost",
+              "type": "number"
+            },
+            {
+              "selector": "energy_price",
+              "text": "energy_price",
+              "type": "number"
+            },
+            {
+              "selector": "weather_index",
+              "text": "weather_index",
+              "type": "number"
+            },
+            {
+              "selector": "calculated_output",
+              "text": "calculated_output",
+              "type": "number"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "biomass_calc_api"
+          },
+          "filters": [],
+          "format": "table",
+          "global_query_id": "",
+          "intervalFactor": 1,
+          "method": "GET",
+          "name": "Query0",
+          "parser": "backend",
+          "refId": "A",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "http://127.0.0.1:8000/calculate?fuel_price=${fuel_price}&commodity_cost=${commodity_cost}&energy_price=${energy_price}&weather_index=${weather_index}",
+          "urlOptions": {
+            "key": "value"
+          },
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        }
+      ],
+      "title": "Current Input Values",
+      "type": "table"
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 39,
+  "tags": [
+    "biomass",
+    "optimization",
+    "what-if",
+    "interpolation"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "2",
+          "value": "2"
+        },
+        "description": "Fuel price in USD per unit",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Fuel Price",
+        "multi": false,
+        "name": "fuel_price",
+        "options": [
+          {
+            "selected": true,
+            "text": "2",
+            "value": "2"
+          }
+        ],
+        "query": "2",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "10",
+          "value": "10"
+        },
+        "description": "Commodity cost in USD per unit",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Commodity Cost",
+        "multi": false,
+        "name": "commodity_cost",
+        "options": [
+          {
+            "selected": true,
+            "text": "10",
+            "value": "10"
+          }
+        ],
+        "query": "10",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "30",
+          "value": "30"
+        },
+        "description": "Energy price in USD per unit",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Energy Price",
+        "multi": false,
+        "name": "energy_price",
+        "options": [
+          {
+            "selected": true,
+            "text": "30",
+            "value": "30"
+          }
+        ],
+        "query": "30",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "50",
+          "value": "50"
+        },
+        "description": "Weather index (0-100)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Weather Index",
+        "multi": false,
+        "name": "weather_index",
+        "options": [],
+        "query": "50",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "textbox"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Biomass Processing Optimizer - What-If Analysis",
+  "uid": "biomass-optimizer",
+  "version": 3,
+  "weekStart": ""
+}
